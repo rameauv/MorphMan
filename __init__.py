@@ -43,6 +43,7 @@ def morphGraphsWrapper(*args, **kwargs):
 
 
 def main():
+    print('__init__ -> main........................................')
     # Add MorphMan submenu
     morphmanSubMenu = QMenu("MorphMan", mw)
     mw.form.menuTools.addMenu(morphmanSubMenu)
@@ -95,5 +96,5 @@ def main():
     anki.stats.CollectionStats.easeGraph = \
         wrap(anki.stats.CollectionStats.easeGraph, morphGraphsWrapper, pos="")
 
-
+# addHook('profileLoaded', main)
 main()

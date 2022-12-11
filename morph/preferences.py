@@ -22,6 +22,7 @@ def init_preferences():
 
 
 def get_preference(key, model_id=None, deck_id=None):
+    # init_preferences()
     try:
         return _get_config_py_preference(key, model_id, deck_id)
     except KeyError:
@@ -29,13 +30,16 @@ def get_preference(key, model_id=None, deck_id=None):
 
 
 def get_preferences():
+    print('get_preferences..........................................;')
     assert mw.col, 'Tried to use preferences with no collection loaded'
     addons_config = mw.col.get_config('addons')
+    print("config................................................", addons_config)
     if addons_config == None or 'morphman' not in addons_config:
         # No config yet in the the collection.
         prefs = {}
     else:
         prefs = addons_config['morphman']
+    print('prefs...............................................', prefs)    
     return prefs
 
 
@@ -54,17 +58,25 @@ def update_preferences(jcfg):
 
 
 def _init_config_py():
+    print('_init_config_py.....................................')
     global config_py
     from . import config
     importlib.reload(config)
+    print('config.....................................', config)
     config_py = config
 
     # Redraw toolbar to update stats
     mw.toolbar.draw()
+    mw.toolbar.redraw()
 
 
 def _get_config_py_preference(key, modelId=None, deckId=None):
+    print('_get_config_py_preference.................................. _get_config_py_preference')
+    print('key', key)
+    print('config_py', config_py)
     assert config_py, 'Tried to use cfgMods before profile loaded'
+    if config_py == None:
+        raise AssertionError("Tried to use cfgMods before profile loaded")
     profile = mw.pm.name
     model = mw.col.models.get(modelId)['name'] if modelId else None
     deck = mw.col.decks.get(deckId)['name'] if deckId else None
@@ -146,7 +158,6 @@ def jcfg_default():
         'Option_SkipComprehensionCards': True,  # bury/skip all new cards that have 'Tag_Comprehension'
         'Option_SkipFreshVocabCards': True,  # bury/skip all new cards that have 'Tag_Fresh'
         'Option_SkipFocusMorphSeenToday': True,
-        'Option_AlwaysPrioritizeFrequencyMorphs': False,
         # bury/skip all new cards that have a focus morph that was reviewed today/marked as `already known`
         'Option_IgnoreBracketContents': False,
         'Option_IgnoreRoundBracketContents': False,

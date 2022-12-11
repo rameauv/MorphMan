@@ -1,11 +1,36 @@
 # -*- coding: utf-8 -*-
 import re
-from functools import lru_cache
 
 from .morphemes import Morpheme
 from .deps.zhon.hanzi import characters
 from .mecab_wrapper import getMorphemesMecab, getMecabIdentity
+from .mecab_wrapper_ko import getMorphemesMecab as getMorphemesMecabKo
 from .deps.jieba import posseg
+
+class LRUCache:
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.tm = 0
+        self.cache = {}
+        self.lru = {}
+
+    def get(self, key):
+        if key in self.cache:
+            self.lru[key] = self.tm
+            self.tm += 1
+            return self.cache[key]
+        return None
+
+    def set(self, key, value):
+        if len(self.cache) >= self.capacity:
+            # find the LRU entry
+            old_key = min(self.lru.keys(), key=lambda k:self.lru[k])
+            self.cache.pop(old_key)
+            self.lru.pop(old_key)
+        self.cache[key] = value
+        self.lru[key] = self.tm
+        self.tm += 1
+
 
 ####################################################################################################
 # Base Class
@@ -13,13 +38,17 @@ from .deps.jieba import posseg
 
 class Morphemizer:
     def __init__(self):
-        pass
-    
-    @lru_cache(maxsize=131072)
+        self.lru = LRUCache(1000000)
+        
     def getMorphemesFromExpr(self, expression):
         # type: (str) -> [Morpheme]
+
+        morphs = self.lru.get(expression)
+        if morphs:
+            return morphs
         
         morphs = self._getMorphemesFromExpr(expression)
+        self.lru.set(expression, morphs)
         return morphs
     
     def _getMorphemesFromExpr(self, expression):
@@ -50,9 +79,9 @@ morphemizers_by_name = {}
 
 def getAllMorphemizers():
     # type: () -> [Morphemizer]
-    global morphemizers
+    global morphemizers, morphemizers_by_name
     if morphemizers is None:
-        morphemizers = [SpaceMorphemizer(), MecabMorphemizer(), JiebaMorphemizer(), CjkCharMorphemizer()]
+        morphemizers = [SpaceMorphemizer(), MecabMorphemizer(), JiebaMorphemizer(), CjkCharMorphemizer(), MecabKoreanMorphemizer()]
 
         for m in morphemizers:
             morphemizers_by_name[m.getName()] = m
@@ -102,9 +131,9 @@ class SpaceMorphemizer(Morphemizer):
     a general-use-morphemizer, it can't generate the base form from inflection.
     """
 
-    def _getMorphemesFromExpr(self, expression):
+    def _getMorphemesFromExpr(self, e):
         word_list = [word.lower()
-                     for word in re.findall(r"\b[^\s\d]+\b", expression, re.UNICODE)]
+                     for word in re.findall(r"\b[^\s\d]+\b", e, re.UNICODE)]
         return [Morpheme(word, word, word, word, 'UNKNOWN', 'UNKNOWN') for word in word_list]
 
     def getDescription(self):
@@ -121,9 +150,9 @@ class CjkCharMorphemizer(Morphemizer):
     characters.
     """
 
-    def _getMorphemesFromExpr(self, expression):
+    def _getMorphemesFromExpr(self, e):
         return [Morpheme(character, character, character, character, 'CJK_CHAR', 'UNKNOWN') for character in
-                re.findall('[%s]' % characters, expression)]
+                re.findall('[%s]' % characters, e)]
 
     def getDescription(self):
         return 'CJK Characters'
@@ -139,11 +168,25 @@ class JiebaMorphemizer(Morphemizer):
     https://github.com/fxsjy/jieba
     """
 
-    def _getMorphemesFromExpr(self, expression):
+    def _getMorphemesFromExpr(self, e):
         # remove all punctuation
-        expression = ''.join(re.findall('[%s]' % characters, expression))
-        return [Morpheme(m.word, m.word, m.word, m.word, m.flag, 'UNKNOWN') for m in
-                posseg.cut(expression)]  # find morphemes using jieba's POS segmenter
+        e = u''.join(re.findall('[%s]' % characters, e))
+        return [Morpheme(m.word, m.word, m.word, m.word, m.flag, u'UNKNOWN') for m in
+                posseg.cut(e)]  # find morphemes using jieba's POS segmenter
 
     def getDescription(self):
         return 'Chinese'
+
+
+class MecabKoreanMorphemizer(Morphemizer):
+    """
+    Because in japanese there are no spaces to differentiate between morphemes,
+    a extra tool called 'mecab' has to be used.
+    """
+
+    def _getMorphemesFromExpr(self, expression):        
+        res = getMorphemesMecabKo(expression)
+        return res
+
+    def getDescription(self):
+        return 'Koreab'

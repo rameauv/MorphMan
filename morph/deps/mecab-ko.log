@@ -1,0 +1,10 @@
+영등포구청역	NNP,지명,T,영등포구청역,Compound,*,*,영등포/NNP/지명+구청/NNG/장소+역/NNG/*
+에	JKB,*,F,에,*,*,*,*
+있	VV,*,T,있,*,*,*,*
+는	ETM,*,T,는,*,*,*,*
+맛집	NNG,*,T,맛집,Compound,*,*,맛/NNG/*+집/NNG/*
+좀	MAG,성분부사|정도부사,T,좀,*,*,*,*
+알려	VV+EC,*,F,알려,Inflect,VV,EC,알리/VV/*+어/EC/*
+주	VX,*,F,주,*,*,*,*
+세요	EP+EF,*,F,세요,Inflect,EP,EF,시/EP/*+어요/EF/*
+

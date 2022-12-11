@@ -15,14 +15,20 @@ def getStatsPath(): return cfg('path_stats')
 
 
 def loadStats():
+    print("stats.py -> loadStats...........................................")
     try:
+        print("stats.py -> loadStats -> f = gzip.open(getStatsPath()) ...........................................", getStatsPath())
         f = gzip.open(getStatsPath())
+        print("stats.py -> loadStats -> d = pickle.load(f) ...........................................")
         d = pickle.load(f)
+        print("stats.py -> loadStats -> f.close() ...........................................")
         f.close()
+        print("stats.py -> loadStats -> return d ...........................................")
         return d
     except IOError:  # file DNE => create it
         return updateStats()
     except AssertionError:  # profile not loaded yet, can't do anything but wait
+        print("profile not loaded yet, can't do anything but wait ...........................................")
         return None
 
 
@@ -49,7 +55,9 @@ def updateStats(known_db=None):
 
 
 def getStatsLink():
+    print("stats.py -> getStatsLink...........................................")
     d = loadStats()
+    print("stats.py -> getStatsLink -> d ...........................................", d)
     if not d:
         return 'K ???', '????'
 
@@ -66,12 +74,18 @@ def on_morph_link_clicked():
 
 
 def on_top_toolbar_did_init_links(links, toolbar):
+    print("stats.py -> on_top_toolbar_did_init_links.............................")
+    print("toolbar", toolbar)
+    print("links", links)
     name, details = getStatsLink()
+    print("name....................................................................", name)
+    print("details", details)
     links.append(
         toolbar.create_link(
             "morph", _(name), on_morph_link_clicked, tip=_(details), id="morph"
         )
     )
+    print("links...................................................................", links)
 
 try:
     from aqt import gui_hooks
