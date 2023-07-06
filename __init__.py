@@ -1,5 +1,6 @@
 from .morph.util import *
-from PyQt5.QtWidgets import *
+# TODO aqt migration, to remove
+# from PyQt5.QtWidgets import *
 import anki.stats
 from anki.hooks import wrap
 

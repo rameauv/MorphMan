@@ -1,5 +1,6 @@
-
-from PyQt5.QtWidgets import QComboBox
+# TODO aqt migration, to remove
+# from PyQt5.QtWidgets import QComboBox
+from aqt.qt import QComboBox
 
 
 class MorphemizerComboBox(QComboBox):

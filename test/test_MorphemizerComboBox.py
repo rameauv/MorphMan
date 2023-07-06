@@ -1,6 +1,8 @@
 import unittest
 
-from PyQt5.QtWidgets import QApplication
+# TODO migration aqt, to remove
+# from PyQt5.QtWidgets import QApplication
+from aqt.qt import QApplication
 from morph.UI import MorphemizerComboBox
 from morph.morphemizer import getAllMorphemizers
 

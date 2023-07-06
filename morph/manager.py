@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+# TODO migration aqt, to remove
+# from PyQt5.QtCore import *
+# from PyQt5.QtGui import *
+from aqt.qt import *
+# TODO migration aqt, to remove
+# from PyQt5.QtWidgets import *
 from anki.utils import isMac
 from .UI import MorphemizerComboBox
 
@@ -250,4 +253,4 @@ class MorphMan(QDialog):
 
 def main():
     mw.mm = MorphMan(mw)
-    mw.mm.show()
+    mw.mm.exec()

@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QApplication, QTableWidget
-from PyQt5.QtGui import QKeySequence
+# TODO aqt migration, to remove
+# from PyQt5.QtWidgets import QApplication, QTableWidget
+# from PyQt5.QtGui import QKeySequence
+from aqt.qt import QApplication, QTableWidget, QKeySequence
 
 class CustomTableWidget(QTableWidget):
 
