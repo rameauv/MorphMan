@@ -1,4 +1,4 @@
-from morph.morphemizer import getMorphemizerByName
+from morph.morphemizer_helpers import getMorphemizerByName
 import unittest
 
 

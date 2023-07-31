@@ -9,7 +9,7 @@ from .UI import MorphemizerComboBox
 
 from . import adaptiveSubs
 from .morphemes import MorphDb
-from .morphemizer import getAllMorphemizers
+from .morphemizer_helpers import getAllMorphemizers
 from .util import errorMsg, infoMsg, mw, mkBtn
 from .preferences import get_preference as cfg
 

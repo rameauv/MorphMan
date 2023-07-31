@@ -7,7 +7,7 @@ from aqt.utils import tooltip
 
 from .util import mw, mkBtn
 from .preferences import get_preference, update_preferences
-from .morphemizer import getAllMorphemizers
+from .morphemizer_helpers import getAllMorphemizers
 from .UI import MorphemizerComboBox
 
 # only for jedi-auto-completion

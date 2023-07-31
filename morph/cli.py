@@ -7,7 +7,7 @@ import sys
 from collections import Counter
 
 from .morphemes import MorphDb
-from .morphemizer import SpaceMorphemizer, MecabMorphemizer, CjkCharMorphemizer, JiebaMorphemizer
+from .morphemizers import SpaceMorphemizer, MecabMorphemizer, CjkCharMorphemizer, JiebaMorphemizer
 
 
 # hack: typing is compile time anyway, so, nothing bad happens if it fails, the try is to support anki < 2.1.16

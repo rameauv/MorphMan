@@ -3,7 +3,7 @@ from aqt.utils import tooltip
 from anki.hooks import addHook
 from anki.utils import strip_html
 from ..morphemes import getMorphemes, MorphDb
-from ..morphemizer import getMorphemizerByName
+from ..morphemizer_helpers import getMorphemizerByName
 from ..util import addBrowserNoteSelectionCmd, getFilter, infoMsg, QInputDialog, QFileDialog, QLineEdit, runOnce
 from ..preferences import get_preference as cfg
 from anki.lang import _

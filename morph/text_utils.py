@@ -2,7 +2,7 @@ import re
 
 from anki.utils import strip_html
 from .morphemes import getMorphemes
-from .morphemizer import getMorphemizerByName
+from .morphemizer_helpers import getMorphemizerByName
 from .preferences import get_preference as cfg
 from .util import getFilterByMidAndTags, allDb
 

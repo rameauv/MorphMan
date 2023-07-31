@@ -3,7 +3,7 @@ import os
 from anki.hooks import addHook
 from anki.utils import strip_html
 from ..morphemes import AnkiDeck, MorphDb, getMorphemes
-from ..morphemizer import getMorphemizerByName
+from ..morphemizer_helpers import getMorphemizerByName
 from ..util import addBrowserNoteSelectionCmd, mw, getFilter, infoMsg, QFileDialog, runOnce
 from ..preferences import get_preference as cfg
 

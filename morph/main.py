@@ -16,7 +16,7 @@ from .morphemes import Location, Morpheme
 from . import stats
 from . import util
 from .morphemes import MorphDb, AnkiDeck, getMorphemes
-from .morphemizer import getMorphemizerByName
+from .morphemizer_helpers import getMorphemizerByName
 from .util import printf, mw, errorMsg, getFilterByMidAndTags, getReadEnabledModels, getModifyEnabledModels
 from .preferences import get_preference as cfg, get_preferences
 from .util_external import memoize

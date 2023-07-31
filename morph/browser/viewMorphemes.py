@@ -2,7 +2,7 @@
 from anki.hooks import addHook
 from anki.utils import strip_html
 from ..morphemes import getMorphemes, ms2str
-from ..morphemizer import getMorphemizerByName
+from ..morphemizer_helpers import getMorphemizerByName
 from ..util import addBrowserNoteSelectionCmd, getFilter, infoMsg, runOnce
 from ..preferences import get_preference as cfg
 

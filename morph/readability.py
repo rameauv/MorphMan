@@ -26,7 +26,7 @@ except:
     pass
 
 from .morphemes import Morpheme, MorphDb, getMorphemes, altIncludesMorpheme
-from .morphemizer import getAllMorphemizers
+from .morphemizer_helpers import getAllMorphemizers
 from .preferences import get_preference as cfg, update_preferences
 from .util import mw
 from anki.utils import strip_html
